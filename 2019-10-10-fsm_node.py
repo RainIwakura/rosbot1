@@ -17,10 +17,10 @@ class RobotState:
         self.state = 0 # 0: stopped, 1: move forward
 
     def scan_callback(self, msg):
-       for d in msg.ranges:
-           if d < SAFETY_THRESHOLD:
-               self.state = 0
-               return
+       d = min(msg.ranges)
+       if d < SAFETY_THRESHOLD:
+           self.state = 0
+           return
        self.state = 1
 
     def spin(self):
